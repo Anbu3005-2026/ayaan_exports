@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #eef5fc;
+    color: #102a43;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background-color: rgba(59, 130, 246, 0.18);
+    color: #0a1522;
+  }
+}
+
+@layer components {
+  .text-gradient {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 45%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.04);
+  }
+
+  .glass-card-hover {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(59, 130, 246, 0.25);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+  }
+
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8 xl:px-16 2xl:px-24;
+  }
+
+  /* Soft light-blue section backgrounds used throughout the page */
+  .bg-section-light {
+    background-color: #eef5fc;
+  }
+  .bg-section-light-alt {
+    background: linear-gradient(180deg, #e3eefb 0%, #eef5fc 100%);
+  }
+
+  .heading-xl {
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight tracking-tight;
+  }
+
+  .heading-lg {
+    @apply text-3xl sm:text-4xl md:text-5xl font-display font-bold leading-tight;
+  }
+
+  .heading-md {
+    @apply text-2xl sm:text-3xl font-display font-semibold leading-snug;
+  }
+
+  .body-lg {
+    @apply text-base sm:text-lg text-navy-700 leading-relaxed;
+  }
+
+  .body-md {
+    @apply text-sm sm:text-base text-navy-600 leading-relaxed;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 bg-accent-blue text-white font-medium rounded-lg 
+           transition-all duration-300 hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-900/20
+           active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 border border-navy-300 text-navy-700 font-medium rounded-lg
+           transition-all duration-300 hover:bg-navy-50 hover:border-navy-400 hover:text-navy-900
+           active:scale-[0.98];
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
