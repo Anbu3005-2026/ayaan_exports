@@ -18,7 +18,7 @@ export default function Hero() {
       {/* Background Image */}
       <motion.div style={{ scale }} className="absolute inset-0 z-0">
         <img 
-          src="/hero-logistics.jpg" 
+          src="/hero-logistics.webp" 
           alt="Global logistics — container ship, truck and cargo plane" 
           className="w-full h-full object-cover"
         />
