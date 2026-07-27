@@ -4,8 +4,9 @@ import { useInView } from 'react-intersection-observer'
 import { 
   Ship, Plane, Boxes, Building2, 
   ShoppingCart, Truck, ArrowRight, Palmtree,
-  X, MessageCircle, Check
+  X, Check
 } from 'lucide-react'
+import { FaWhatsapp } from "react-icons/fa";
 
 const WHATSAPP_NUMBER = '918883164760'
 
@@ -185,7 +186,7 @@ function ServiceModal({ service, onClose }) {
                 rel="noopener noreferrer"
                 className="btn-primary w-full justify-center"
               >
-                <MessageCircle size={18} />
+                <FaWhatsapp size={18} />
                 Get a Quote via WhatsApp
               </a>
             </div>
