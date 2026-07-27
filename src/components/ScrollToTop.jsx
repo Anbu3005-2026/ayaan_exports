@@ -34,7 +34,7 @@ export default function ScrollToTop() {
           transition={{ type: 'spring', stiffness: 300, damping: 22 }}
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.9 }}
-          className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full p-[3px] shadow-lg shadow-navy-900/20"
+          className="fixed bottom-6 right-6 z-40 w-10 h-12 rounded-full p-[2px] shadow-lg shadow-navy-900/20"
         >
           {/* Progress fill ring — fills with red as the page is scrolled */}
           <motion.div className="absolute inset-0 rounded-full" style={{ background }} />
