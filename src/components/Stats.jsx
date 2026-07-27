@@ -5,7 +5,7 @@ import CountUp from 'react-countup'
 import { Package, ConciergeBell, Globe2, Award } from 'lucide-react'
 
 const stats = [
-  { icon: Package, value: 300, suffix: '+', label: 'Shipments Delivered', description: 'Successful cargo movements' },
+  { icon: Package, value: 500, suffix: '+', label: 'Shipments Delivered', description: 'Successful cargo movements' },
   { icon: ConciergeBell, value: 80, suffix: '+', label: 'Hospitality Clients', description: 'Resorts & hotels supplied' },
   { icon: Globe2, value: 10, suffix: '+', label: 'Countries Served', description: 'International reach' },
   { icon: Award, value: 5, suffix: '+', label: 'Years of Excellence', description: 'Since 2021' },
