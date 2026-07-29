@@ -206,7 +206,7 @@ export default function Navbar() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
                   onClick={() => setMobileOpen(false)}
-                  className="text-2xl font-display text-navy-700 hover:text-navy-900 transition-colors"
+                  className="text-2xl font-display font-semibold text-navy-700 hover:text-navy-900 transition-colors"
                 >
                   {link.name}
                 </motion.a>

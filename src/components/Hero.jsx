@@ -17,11 +17,19 @@ export default function Hero() {
     <section id="home" ref={ref} className="relative min-h-screen flex items-center overflow-hidden bg-navy-900">
       {/* Background Image */}
       <motion.div style={{ scale }} className="absolute inset-0 z-0">
-        <img 
-          src="/hero-logistics.webp" 
-          alt="Global logistics — container ship, truck and cargo plane" 
-          className="w-full h-full object-cover"
-        />
+        <picture>
+          <source srcSet="/hero-logistics.webp" type="image/webp" />
+          <img 
+            src="/hero-logistics.jpg" 
+            alt="Global logistics — container ship, truck and cargo plane" 
+            className="w-full h-full object-cover"
+            width="1920"
+            height="1080"
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+          />
+        </picture>
         {/* Left-side scrim so text sits clearly over the photo — lightened */}
         <div className="absolute inset-0 bg-gradient-to-r from-navy-950/70 via-navy-950/40 to-navy-950/15 z-10" />
         {/* Vertical scrim, softer overall and lighter toward the bottom */}
