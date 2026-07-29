@@ -128,12 +128,12 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <a href="#home" className="flex items-center gap-3 group">
-              <div className="relative w-12 h-12 overflow-hidden rounded-lg ring-1 ring-white/10">
-                <img 
-                  src="/ayaan_exports_logo.jpeg" 
-                  alt="Ayaan Exports" 
-                  className="w-full h-full object-cover"
-                />
+              <div className="relative w-12 h-12 overflow-hidden rounded-lg ring-1 ring-white/10 bg-white flex items-center justify-center">
+              <img 
+                src="/ayaan_exports_logo.jpeg" 
+                alt="Ayaan Exports" 
+                className="w-full h-full object-contain p-0.5"
+              />
               </div>
               <div className="flex flex-col">
                 <span className={`text-lg font-display font-bold tracking-wide transition-colors duration-500 ${

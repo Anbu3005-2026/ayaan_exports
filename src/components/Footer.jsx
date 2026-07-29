@@ -47,11 +47,11 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-4">
             <a href="#home" className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-lg overflow-hidden">
+              <div className="w-10 h-10 rounded-lg overflow-hidden bg-white flex items-center justify-center">
                 <img 
                   src="/ayaan_exports_logo.jpeg" 
                   alt="Ayaan Exports" 
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain p-0.5"
                 />
               </div>
               <div>
