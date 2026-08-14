@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Menu, X, ArrowRight, Phone, Mail, ExternalLink, Copy, Check, Send } from 'lucide-react'
 import { FaWhatsapp } from "react-icons/fa";
 
@@ -33,6 +34,20 @@ const mailOptions = [
     action: () => { window.location.href = `mailto:${EMAIL}` },
   },
 ]
+
+// Polls for the target section across a few animation frames — needed because
+// after navigate('/') from a legal page, the homepage sections mount a beat
+// after this click handler runs, so the element isn't in the DOM yet.
+function scrollToIdWhenReady(id, attemptsLeft = 30) {
+  const el = document.getElementById(id)
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    return
+  }
+  if (attemptsLeft > 0) {
+    requestAnimationFrame(() => scrollToIdWhenReady(id, attemptsLeft - 1))
+  }
+}
 
 function MailMenu({ light }) {
   const [open, setOpen] = useState(false)
@@ -105,12 +120,46 @@ function MailMenu({ light }) {
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // React Router doesn't reset scroll position on route change (only a real
+  // full page load does that natively). This covers both plain <Link> clicks
+  // (e.g. Footer's "Privacy Policy") and this Navbar's own anchor clicks —
+  // for the latter, scrollToIdWhenReady below runs right after and moves the
+  // page to the right section, so this is just the safe default in between.
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [location.pathname])
+
+  // Handles every in-page anchor link (#home, #services, logo, "Get a Quote", etc.).
+  // On the homepage: just smooth-scroll. On any other route (e.g. /privacy):
+  // navigate back to "/" first, then scroll once the homepage has mounted.
+  const handleAnchorClick = (e, href) => {
+    e.preventDefault()
+    const id = href.replace('#', '')
+    setMobileOpen(false)
+
+    if (location.pathname === '/') {
+      scrollToIdWhenReady(id)
+    } else {
+      navigate('/')
+      scrollToIdWhenReady(id)
+    }
+  }
+
+  const isHome = location.pathname === '/'
+  // The transparent/white-text look only makes sense over the homepage's dark
+  // hero. Every other page (legal pages, etc.) has a light background from
+  // the top, so force the solid/dark-text style there regardless of scroll —
+  // homepage behavior is untouched (still driven purely by `scrolled`).
+  const solid = isHome ? scrolled : true
 
   return (
     <>
@@ -119,7 +168,7 @@ export default function Navbar() {
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled 
+          solid 
             ? 'bg-white/95 backdrop-blur-xl border-b border-navy-100 shadow-md shadow-navy-900/5' 
             : 'bg-transparent border-b border-transparent'
         }`}
@@ -127,7 +176,7 @@ export default function Navbar() {
         <div className="section-padding max-w-[1440px] mx-auto">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <a href="#home" className="flex items-center gap-3 group">
+            <a href="#home" onClick={(e) => handleAnchorClick(e, '#home')} className="flex items-center gap-3 group">
               <div className="relative w-12 h-12 overflow-hidden rounded-lg ring-1 ring-white/10 bg-white flex items-center justify-center">
               <img 
                 src="/ayaan_exports_logo.jpeg" 
@@ -137,12 +186,12 @@ export default function Navbar() {
               </div>
               <div className="flex flex-col">
                 <span className={`text-lg font-display font-bold tracking-wide transition-colors duration-500 ${
-                  scrolled ? 'text-navy-900' : 'text-white'
+                  solid ? 'text-navy-900' : 'text-white'
                 }`}>
                   AYAAN EXPORTS
                 </span>
                 <span className={`text-[10px] tracking-[0.2em] uppercase transition-colors duration-500 ${
-                  scrolled ? 'text-navy-700' : 'text-white/75'
+                  solid ? 'text-navy-700' : 'text-white/75'
                 }`}>Indian Import & Exporter</span>
               </div>
             </a>
@@ -153,8 +202,9 @@ export default function Navbar() {
                 <a
                   key={link.name}
                   href={link.href}
+                  onClick={(e) => handleAnchorClick(e, link.href)}
                   className={`text-sm transition-colors duration-300 relative group ${
-                    scrolled ? 'text-navy-600 hover:text-navy-900' : 'text-white/85 hover:text-white'
+                    solid ? 'text-navy-600 hover:text-navy-900' : 'text-white/85 hover:text-white'
                   }`}
                 >
                   {link.name}
@@ -165,13 +215,13 @@ export default function Navbar() {
 
             {/* CTA */}
             <div className="hidden lg:flex items-center gap-4">
-              <MailMenu light={!scrolled} />
+              <MailMenu light={!solid} />
               <a href="https://wa.me/918883164760" target="_blank" className={`transition-colors ${
-                scrolled ? 'text-navy-500 hover:text-navy-900' : 'text-white/80 hover:text-white'
+                solid ? 'text-navy-500 hover:text-navy-900' : 'text-white/80 hover:text-white'
               }`}>
                 <FaWhatsapp size={18} className="-translate-y-0.5" />
               </a>
-              <a href="#contact" className="btn-primary text-sm py-2.5 px-5">
+              <a href="#contact" onClick={(e) => handleAnchorClick(e, '#contact')} className="btn-primary text-sm py-2.5 px-5">
                 Get a Quote
                 <ArrowRight size={18} />
               </a>
@@ -180,7 +230,7 @@ export default function Navbar() {
             {/* Mobile Toggle */}
             <button 
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={`lg:hidden p-2 transition-colors duration-500 ${scrolled ? 'text-navy-900' : 'text-white'}`}
+              className={`lg:hidden p-2 transition-colors duration-500 ${solid ? 'text-navy-900' : 'text-white'}`}
             >
               {mobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -205,7 +255,7 @@ export default function Navbar() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => handleAnchorClick(e, link.href)}
                   className="text-2xl font-display font-semibold text-navy-700 hover:text-navy-900 transition-colors"
                 >
                   {link.name}
