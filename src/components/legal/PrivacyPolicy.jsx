@@ -5,8 +5,7 @@ import LegalPageLayout from './LegalPageLayout'
 const CONTACT = {
   email: 'sales@ayaanexports.co.in',
   phone: '+91 8883164760',
-  address:
-    'Door No: 3-111E, Kallam Pottai, Maruthan Code Post, K.K. District, Tamil Nadu, India — 629163',
+  
 }
 
 const sections = [
