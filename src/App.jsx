@@ -11,7 +11,6 @@ import Process from './components/Process'
 import CTA from './components/CTA'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
-
 import TermsAndConditions from './components/legal/TermsAndConditions'
 import PrivacyPolicy from './components/legal/PrivacyPolicy'
 import ShippingDeliveryPolicy from './components/legal/ShippingDeliveryPolicy'
